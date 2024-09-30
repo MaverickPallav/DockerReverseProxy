@@ -1,0 +1,15 @@
+version: '3.8'  # Specify the Compose file format version
+
+services:
+  docker-reverse-proxy:
+    build:
+      context: .  # The current directory as the build context
+      dockerfile: Dockerfile.dev  # Specify the Dockerfile to use
+    command: npm run dev  # Command to run the application
+    ports:
+      - "8080:8080"  # Map port 8080 of the host to port 8080 of the container
+      - "80:80"      # Map port 80 of the host to port 80 of the container
+    network_mode: bridge  # Use the bridge network
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  # Share the Docker socket
+      - .:/app  # Mount the current directory to /app in the container
